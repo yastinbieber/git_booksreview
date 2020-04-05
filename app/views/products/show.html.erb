@@ -1,0 +1,63 @@
+<div class="contents-box">
+  <div class="container-left">
+    <div class="container-left-register">
+      <h3>選んだ書籍</h3>
+    </div>
+    <div class="container-search-result">
+      <div class="container-search-result-box" title="<%= @product.bookname %>">
+        <div class="container-search-result-box-left" >
+          <% if @product.image.attached? %>
+            <%= image_tag @product.image %>
+          <% end %>
+        </div>
+        <div class="container-search-result-box-right">
+          <h2><%= @product.bookname %></h2>
+          <p><%= @product.author %></p>
+          <p>レビュー数：<%= @review %></p>
+        </div>
+      </div>
+    </div>
+    <div class="write-review">
+      <a class="right-btn-review" href="/products/<%= @product.id %>/reviews/new">レビューを書く</a>
+    </div>
+    <!--レビュー詳細-->
+    <div class="container-left-register">
+      <h3>書籍に対するレビュー一覧（評価の高い順）</h3>
+    </div>
+    <% @product.reviews.each do |review| %>
+    <div class="review-detail">
+      <div class="review-detail-item">
+        <div class="username">
+          <a class="user-page" href="/users/<%= review.user_id %>">@<%= review.user.nickname %></a>
+          <p class="text-small">
+          <% if review.comments.present? %>
+            <span>レビューに対しての平均評価：</span>
+            <span class="rating-star">
+              <i class="star-actived rate-<%= review.comments.average(:rate).round %>0"></i>
+            </span>
+          <% else %>
+            <span>レビューに対しての平均評価：</span>
+            <span class="rating-star">
+              <i class="star-actived rate-0"></i>
+            </span>
+          <% end %>
+          </p>
+        </div>
+        <div class="write-review">
+          <h3><span class="product-btn">title：<%= @product.bookname %></span></h3>
+        </div>
+        <div class="review-1">
+          <br><p><%= truncate(review.review, length: 10) do %></p>
+          <% end %>
+        </div>
+      </div>
+      <%= link_to 'レビュー詳細', "/products/#{@product.id}/reviews/#{review.id}", method: :get, class: "right-btn-review-detail" %>
+    </div>
+    <% end %>
+  </div>
+  <div class="container-right">
+    <%= link_to "書籍を検索する", "/products/search", class: "right-btn" %>
+    <%= link_to "マイページ", user_path(current_user), class: "right-btn" %>
+    <a class="right-btn" href=""></a>
+  </div>
+</div>

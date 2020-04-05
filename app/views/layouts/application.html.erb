@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Booksreview</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" >
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header>
+      <div class="header">
+        <div class="header-top">
+          <div class="title">
+            <a href="/products">Booksrevier</a>
+          </div>
+          <% if user_signed_in? %>
+          <div class="menu">
+            <ul id="dropmenu">
+              <li><a href="">mypage</a>
+                <ul>
+                  <li><%= link_to "マイページ", user_path(current_user) %></li>
+                  <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <% else %>
+          <div class="menu">
+            <ul id="dropmenu">
+              <li><%= link_to "ログイン", new_user_session_path, class: 'post' %></li>
+              <li><%= link_to "新規登録", new_user_registration_path, class: 'post' %></li>
+            </ul>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </header>
+    <%= yield %>
+  </body>
+</html>
+
+

@@ -1,0 +1,82 @@
+<div class="contents-box">
+  <div class="container-left">
+    <div class="container-left-register">
+      <h3>選んだ書籍</h3>
+    </div>
+    <div class="container-search-result">
+      <div class="container-search-result-box" title="<%= @product.bookname %>">
+        <div class="container-search-result-box-left" >
+          <% if @product.image.attached? %>
+            <%= image_tag @product.image %>
+          <% end %>
+        </div>
+        <div class="container-search-result-box-right">
+          <h2><%= @product.bookname %></h2>
+          <p><%= @product.author %></p>
+        </div>
+      </div>
+    </div>
+    <div class="container-left-register">
+      <h3>レビュー詳細</h3>
+    </div>
+    <div class="review-detail">
+      <div class="review-detail-item">
+        <div class="username">
+          <a class="user-page" href="/users/<%= @review.user_id %>">@<%= @review.user.nickname %></a>
+          <p class="text-small">
+          <% if @review.comments.present? %>
+            <span>レビューに対しての平均評価：</span>
+            <span class="rating-star">
+              <i class="star-actived rate-<%= @review.comments.average(:rate).round %>0"></i>
+            </span>
+          <% else %>
+            <span>レビューに対しての評価：</span>
+            <span class="rating-star">
+              <i class="star-actived rate-0"></i>
+            </span>
+          <% end %>
+          </p>
+        </div>
+        <div class="write-review">
+          <span class="product-btn">title：<%= @product.bookname %></span>
+        </div>
+        <br><br>
+        <div class="review-1">
+          <p><%= @review.review %></p>
+        </div>
+        <div class="review-2">
+          <p><%= @review.review %></p>
+        </div>
+        <div class="review-3">
+          <p><%= @review.review %></p>
+        </div>
+      </div>
+      <% if user_signed_in? && current_user.id == @review.user_id %>
+      <%= link_to '編集', "/products/#{@product.id}/reviews/#{@review.id}/edit", method: :get, class: "right-btn-review-detail" %>
+      <%= link_to '削除', "/products/#{@product.id}/reviews/#{@review.id}", method: :delete, class: "right-btn-review-detail" %>
+      <% end %>
+      <%= link_to 'フィードバックをする', "/products/#{@product.id}/reviews/#{@review.id}/comments/new", method: :get, class: "right-btn-review-detail" %>
+    </div>
+    <!--コメント一覧-->
+    <div class="container-left-register">
+      <h3>レビューに対するコメント一覧</h3>
+    </div>
+    <% @review.comments.each do |comment| %>
+    <div class="grad-wrap">
+      <div class="grad-item">
+        <div class="username">
+          <a class="user-page" href="/users/<%= comment.user_id %>">@<%= comment.user.nickname %></a>
+        </div>
+        <div class="write-review">
+          <%= link_to 'フィードバック詳細', "/products/#{@product.id}/reviews/#{@review.id}/comments/#{comment.id}", method: :get, class: "right-btn-review-detail" %>
+        </div>
+        <div class="feedback-1">
+          <p><%= truncate(comment.text, length: 10) do %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+

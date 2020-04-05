@@ -1,0 +1,55 @@
+<div class="contents-box">
+  <div class="AAABBB">
+    <div class="container-left-register">
+      <h3>プロフィール</h3>
+    </div>
+      <div class="container-search-result">
+        <div class="container-search-result-box-pf">
+          <div class="container-search-result-box-left">
+            <% if @user.image.attached? %>
+              <%= image_tag @user.image %>
+            <% end %>
+          </div>
+          <div class="container-search-result-box-right">
+            <h2>@<%= @nickname %></h2>
+            <span><%= link_to "プロフィール編集", edit_user_path(current_user), {:class => "btn3" } %></span>
+            <br><br><p><%= @user.selfintroduction %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="AAABBB-bottom">
+      <div class="container-left-register">
+        <h3>レビュー</h3>
+      </div>
+      <% current_user.reviews.each do |review| %>
+      <div class="review-detail">
+        <div class="review-detail-item">
+          <div class="username">
+            <p class="text-small">
+            <% if review.comments.present? %>
+              <span>レビューに対しての平均評価：</span>
+              <span class="rating-star">
+                <i class="star-actived rate-<%= review.comments.average(:rate).round %>0"></i>
+              </span>
+            <% else %>
+              <span>レビューに対しての平均評価：</span>
+              <span class="rating-star">
+                <i class="star-actived rate-0"></i>
+              </span>
+            <% end %>
+            </p>
+          </div>
+          <div class="write-review">
+            <h3><span class="product-btn">title：</span></h3>
+          </div>
+          <div class="review-1">
+            <br><p><%= truncate(review.review, length: 10) do %></p>
+            <% end %>
+          </div>
+        </div>
+        <%= link_to 'レビュー詳細', "/products", method: :get, class: "right-btn-review-detail" %>
+      </div>
+      <% end %>
+  </div>
+</div>

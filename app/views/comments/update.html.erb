@@ -1,0 +1,9 @@
+<div class="contents-box">
+  <div class="container-left">
+    <div class="container-left-register">
+      <h3>フィードバックの編集が完了しました</h3>
+    </div>
+    <%= link_to "全体へ戻る", "/products", class:"btn-btn" %>
+    <%= link_to 'FBをした投稿へ戻る', " /products/#{@product.id}/reviews/#{@review.id}/comments/#{@comment.id}", class: "btn-btn" %>
+  </div>
+</div>

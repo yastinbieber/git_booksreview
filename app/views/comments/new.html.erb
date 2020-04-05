@@ -1,0 +1,56 @@
+<div class="contents-box">
+  <div class="container-left">
+    <div class="container-left-register">
+      <h3>選んだ書籍</h3>
+    </div>
+    <div class="container-search-result">
+      <div class="container-search-result-box" title="<%= @product.bookname %>">
+        <div class="container-search-result-box-left" >
+          <% if @product.image.attached? %>
+            <%= image_tag @product.image %>
+          <% end %>
+        </div>
+        <div class="container-search-result-box-right">
+          <h2><%= @product.bookname %></h2>
+          <p><%= @product.author %></p>
+        </div>
+      </div>
+    </div>
+    <div class="container-left-register">
+      <h3>レビュー詳細</h3>
+    </div>
+    <div class="review-detail">
+      <div class="review-detail-item">
+        <a class="user-page" href="/users/<%= @review.user_id %>">@<%= @review.user.nickname %></a>
+        <h3><span class="product-btn">title：<%= @product.bookname %></span></h3>
+        <div class="review-1">
+          <p><%= @review.review %></p>
+        </div>
+        <div class="review-2">
+          <p><%= @review.review %></p>
+        </div>
+        <div class="review-3">
+          <p><%= @review.review %></p>
+        </div>
+      </div>
+    </div>
+    <div class="container-left-register">
+      <h3>新規でレビューに対してフィードバックをする</h3>
+    </div>
+    <div class="grad-item">
+      <div class="book-write-review">
+        <%= form_for [@product, @review, @comment] do |f| %>
+        <div class="field">
+          <%= f.label :評価：, style: { 'margin-right' => 8 } %>(10段階評価)
+          <br><%= f.number_field :rate, placeholder: '評価', class: 'input form-control', value: 1, max: 10, min: 1 %>
+        <div class="field">
+          <br><span><%= f.label :text, "フィードバック：" %></span><br>
+          <span><%= f.text_area :text, placeholder: "Feedback...", class: 'input form-control' %></span>
+        </div>
+        <%= f.submit "送信する", class: "btn" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

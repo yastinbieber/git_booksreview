@@ -1,0 +1,39 @@
+<div class="contents-box">
+  <div class="container-left">
+    <div class="container-search-box">
+      <h3>書籍を検索する</h3>
+      <%= form_tag('/products/search', method: :get) do %>
+        <input id="sbox" name="keyword" type="text" placeholder="キーワードを入力" />
+        <input id="sbtn" type="submit" value="検索" />
+      <% end %>
+      <form accept-charset="utf-8" action="/" class="js-search-submit" method="get">
+      </form>
+    </div>
+    <div class="container-search-result">
+      <h3>検索一覧</h3>
+      <% @products.each do |product| %>
+      <a class="container-search-result-box" href="/products/<%= product.id %>" title="<%= product.bookname %>">
+        <div class="container-search-result-box-left" >
+          <% if product.image.attached? %>
+          <%= image_tag product.image %>
+        <% end %>
+        </div>
+        <div class="container-search-result-box-right">
+          <h2><%= product.bookname %></h2>
+          <%= product.author %>
+        </div>
+      </a>
+      <% end %>
+      <div class="no-search">
+        <p>検索でレビューを書きたい書籍が見つからなかった場合はまず書籍をご登録ください</p>
+        <a class="right-btn" href="/products/new">書籍を登録する</a>
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="container-right">
+    <%= link_to "書籍を検索する", "/products/search", class: "right-btn" %>
+    <%= link_to "マイページ", user_path(current_user), class: "right-btn" %>
+    <a class="right-btn" href=""></a>
+  </div>
+</div>
